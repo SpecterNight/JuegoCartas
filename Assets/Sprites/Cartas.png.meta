@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -1406,22 +1406,22 @@ TextureImporter:
       trebol_5: -1037155146
       corazon_10: -1968403021
       diamante_11: 1824409368
-      diamante_3: 755043165
       pica_8: 1546629213
-      pica_1: -517382789
+      diamante_3: 755043165
       corazon_3: -663002120
       joker_1: 923817234
-      pica_4: 521577425
+      pica_1: -517382789
       diamante_13: -1764751099
       trebol_9: -771658709
       corazon_8: 925537590
       diamante_5: -1750143844
       trebol_6: 1589475889
-      backRed_1: 127663057
+      pica_4: 521577425
       corazon_6: 42634575
       diamante_7: 1403332418
-      diamante_1: -1311924547
+      backRed_1: 127663057
       backBlue_2: 461127842
+      diamante_1: -1311924547
       trebol_7: -1014633817
       diamante_9: 907207390
       corazon_13: -1470609300
