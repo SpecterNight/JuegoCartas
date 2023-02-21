@@ -1,14 +1,17 @@
 using UnityEngine;
 
 public class PrefabController{
+    private Vector3 posicionInicial = new Vector3(0,-10,0);
     private GameObject cartaPrefab = Resources.Load<GameObject>("cartaPrefab");
     public Sprite[] cartasSprite;
-    public void mostrarPrefab(Vector3 posicion, int numeroCarta, string palo){
+    public void mostrarPrefab(int deck, int numeroCarta, string palo){
         GameObject prefab = cartaPrefab;
+        GameObject ubicacion = GameObject.Find("Deck"+deck);
         prefab.GetComponent<SpriteRenderer>().sprite = cartasSprite[System.Array.FindIndex(cartasSprite, s => s.name.Equals(palo+"_"+numeroCarta))];
         prefab.GetComponent<Transform>().localScale = new Vector3(1.244947f, 1.494595f,1);
+        prefab.name = palo+numeroCarta;
         Quaternion rotacion = new Quaternion();
-        UnityEngine.Object.Instantiate(prefab, posicion, rotacion);
+        UnityEngine.Object.Instantiate(prefab, posicionInicial, rotacion,ubicacion.transform);
     }
     
     public void destruirClones(){
