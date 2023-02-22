@@ -18,6 +18,8 @@ public class JuegoPrincipal : MonoBehaviour{
     public GameObject botonBarajarP;
     public GameObject botonJugar;
     public GameObject panel; 
+    public GameObject mensajeFin;
+    public TMP_Text mensajePartida;
     // Start is called before the first frame update
     void Start(){
         inicializarJuego();
@@ -33,10 +35,13 @@ public class JuegoPrincipal : MonoBehaviour{
     public void inicializarJuego(){
         barajaController = new BarajaController();
         prefabController = new PrefabController();
+        prefabController.destruirClones();
         prefabController.cartasSprite = spriteCartas;
+        mensajeFin.SetActive(false);
         panel.SetActive(false);
         activarBarajar(true);
-        botonJugar.SetActive(true);
+        botonJugar.SetActive(false);
+        botonOrdenar.SetActive(false);
         barajaController.inicializarBaraja();
         //inicializarTablero();
     }
@@ -89,6 +94,7 @@ public class JuegoPrincipal : MonoBehaviour{
     }
 
     public void ordenarCarta(){
+        bool esGanador = true;
         botonOrdenar.SetActive(false);
         if(!cartaSeleccionada.EstaOrdenada){
             Carta cartaAux = tablero[cartaSeleccionada.Numero-1,0];
@@ -103,22 +109,29 @@ public class JuegoPrincipal : MonoBehaviour{
             tablero[cartaSeleccionada.Numero-1, 3] = cartaSeleccionada;
             cartaSeleccionada = cartaAux;
         }else{
-            botonOrdenar.SetActive(true);
-            Debug.Log("Perdedor");
+            for (int i = 0; i < 13; i++){
+                for (int j = 0; j < 4; j++){
+                    if((i+1)!=tablero[i,j].Numero){
+                        esGanador = false;
+                        break;
+                    }
+                }
+            }
+            activarFin(esGanador);
         }
     }
 
     public void barajarRapido(){
         barajaController.barajar_Rapido();
-        barajaController.barajar_Pila();
         activarBarajar(false);
+        botonJugar.SetActive(true);
 
     }
 
     public void barajarPila(){
-        barajaController.barajar_Rapido();
         barajaController.barajar_Pila();
         activarBarajar(false);
+        botonJugar.SetActive(true);
     }
 
     public void comenzarJuego(){
@@ -126,10 +139,25 @@ public class JuegoPrincipal : MonoBehaviour{
         inicializarTablero();
         botonJugar.SetActive(false);
         repartirCartas();
+        botonOrdenar.SetActive(true);
     }
 
     private void activarBarajar(bool activar){
         botonBarajarP.SetActive(activar);
         botonBarajarR.SetActive(activar);
     }
+    private void activarFin(bool esGanador){
+        if(esGanador){
+            mensajePartida.text = "Ganador";
+            mensajePartida.color = Color.green;
+        }else{
+            mensajePartida.text = "Perdedor";
+            mensajePartida.color = Color.red;
+        }
+        mensajeFin.SetActive(true);
+    }
+
+    public void salirJuego(){
+        Application.Quit();
+    } 
 }

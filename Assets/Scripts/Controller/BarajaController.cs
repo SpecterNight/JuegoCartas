@@ -45,6 +45,7 @@ public class BarajaController{
             cartas[i+1] = barajaP2[aux];
             aux++;
         }
+        UnityEngine.Debug.Log("barajeado Rapido");
     }
 
     public void barajar_Pila(){
@@ -61,6 +62,7 @@ public class BarajaController{
                 Array.Copy(pila,0,cartas,0,numPila);
             }
         }
+        UnityEngine.Debug.Log("barajeado por pila");
     }
 
     public void imprimir(Carta[] elementos){

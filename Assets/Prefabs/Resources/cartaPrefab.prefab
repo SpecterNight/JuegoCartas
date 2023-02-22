@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1949676767, guid: 374019e4bca9e094b84eb571e40d343c, type: 3}
+  m_Sprite: {fileID: 1749835462, guid: 374019e4bca9e094b84eb571e40d343c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -100,6 +100,10 @@ MonoBehaviour:
   mover: 0
   posicionFinal: {x: 0, y: 0, z: 0}
   posicionIntermedia: {x: 0, y: 0, z: 0}
-  estaOrdenada: 0
-  llegoIntermedio: 0
+  posicionInicial: {x: 0, y: 0, z: 0}
+  moverIntermedio: 0
+  moverInicial: 0
+  moverFinal: 0
   velocidadMovimiento: 10
+  boton: {fileID: 0}
+  caraCarta: {fileID: 0}
