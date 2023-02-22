@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class CartaController : MonoBehaviour{
     public bool mover = false;
@@ -11,8 +12,10 @@ public class CartaController : MonoBehaviour{
     public bool moverIntermedio = false;
     public bool moverInicial = false;
     public bool moverFinal = false;
-    public float velocidadMovimiento = 10;
+    public float velocidadMovimiento = 3;
     public Carta carta;
+    public GameObject boton;
+    public Sprite caraCarta;
     // Start is called before the first frame update
     void Start(){
          posicionIntermedia = new Vector3(-8.0f,0.0f,0.0f);
@@ -33,19 +36,26 @@ public class CartaController : MonoBehaviour{
                 if(transform.position == posicionIntermedia){
                     moverIntermedio = false;
                     moverFinal = true;
+                    mostrarCara();
                 }
             }
             if(moverFinal){
                 moverCarta(posicionFinal);
                 if(transform.position == posicionFinal){
                     mover = false;
+                    boton.SetActive(true);
                 }
             }
         }
     }
     
     public void moverCarta(Vector3 posicionDestino){
-        transform.position = Vector3.SmoothDamp(transform.position, posicionDestino,ref velocity,0.5f,velocidadMovimiento);
+        transform.position = Vector3.SmoothDamp(transform.position, posicionDestino,ref velocity,0.1f,velocidadMovimiento);
         mover = !(transform.position == posicionFinal);
+    }
+
+    private void mostrarCara(){
+       // GetComponent<SpriteRenderer>().sprite = cartasSprite[System.Array.FindIndex(cartasSprite, s => s.name.Equals(palo+"_"+numeroCarta))];
+        GetComponent<SpriteRenderer>().sprite = caraCarta;
     }
 }

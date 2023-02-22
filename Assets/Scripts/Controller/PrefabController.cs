@@ -7,7 +7,7 @@ public class PrefabController{
     public void mostrarPrefab(int deck, int numeroCarta, string palo){
         GameObject prefab = cartaPrefab;
         GameObject ubicacion = GameObject.Find("Deck"+deck);
-        prefab.GetComponent<SpriteRenderer>().sprite = cartasSprite[System.Array.FindIndex(cartasSprite, s => s.name.Equals(palo+"_"+numeroCarta))];
+        prefab.GetComponent<SpriteRenderer>().sprite = cartasSprite[System.Array.FindIndex(cartasSprite, s => s.name.Equals("backBlack_1"))];
         prefab.GetComponent<Transform>().localScale = new Vector3(1.244947f, 1.494595f,1);
         prefab.name = palo+numeroCarta;
         Quaternion rotacion = new Quaternion();
