@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class JuegoPrincipal : MonoBehaviour{
     private BarajaController barajaController;
@@ -12,12 +13,16 @@ public class JuegoPrincipal : MonoBehaviour{
     private Vector3[] posiciones = new Vector3[13];
     
     private Carta cartaSeleccionada;
-    public GameObject botonBarajar;
+    public GameObject botonOrdenar;
+    public GameObject botonBarajarR;
+    public GameObject botonBarajarP;
+    public GameObject botonJugar;
+    public GameObject panel; 
     // Start is called before the first frame update
     void Start(){
         inicializarJuego();
+        panel.SetActive(true);
         obtenerPosiciones();
-        repartirCartas();
     }
 
     // Update is called once per frame
@@ -29,8 +34,11 @@ public class JuegoPrincipal : MonoBehaviour{
         barajaController = new BarajaController();
         prefabController = new PrefabController();
         prefabController.cartasSprite = spriteCartas;
+        panel.SetActive(false);
+        activarBarajar(true);
+        botonJugar.SetActive(true);
         barajaController.inicializarBaraja();
-        inicializarTablero();
+        //inicializarTablero();
     }
 
     public void inicializarTablero(){
@@ -64,7 +72,7 @@ public class JuegoPrincipal : MonoBehaviour{
                 posicionInicial = new Vector3(posiciones[i].x,posiciones[i].y+yOffset,posiciones[i].z+zOffset);
                 prefabController.mostrarPrefab((i+1),tablero[i,j].Numero,tablero[i,j].Palo);
                 GameObject target = GameObject.Find(tablero[i,j].Palo+tablero[i,j].Numero+("(Clone)"));
-                target.GetComponent<CartaController>().boton = botonBarajar;
+                target.GetComponent<CartaController>().boton = botonOrdenar;
                 target.GetComponent<CartaController>().caraCarta = spriteCartas[System.Array.FindIndex(spriteCartas, s => s.name.Equals(tablero[i,j].Palo+"_"+tablero[i,j].Numero))];
                 target.GetComponent<CartaController>().carta = tablero[i,j];
                 target.GetComponent<CartaController>().posicionInicial = posicionInicial;
@@ -81,7 +89,7 @@ public class JuegoPrincipal : MonoBehaviour{
     }
 
     public void ordenarCarta(){
-        botonBarajar.SetActive(false);
+        botonOrdenar.SetActive(false);
         if(!cartaSeleccionada.EstaOrdenada){
             Carta cartaAux = tablero[cartaSeleccionada.Numero-1,0];
             for (int i = 0; i < 3; i++){
@@ -95,8 +103,33 @@ public class JuegoPrincipal : MonoBehaviour{
             tablero[cartaSeleccionada.Numero-1, 3] = cartaSeleccionada;
             cartaSeleccionada = cartaAux;
         }else{
-            botonBarajar.SetActive(true);
+            botonOrdenar.SetActive(true);
             Debug.Log("Perdedor");
         }
+    }
+
+    public void barajarRapido(){
+        barajaController.barajar_Rapido();
+        barajaController.barajar_Pila();
+        activarBarajar(false);
+
+    }
+
+    public void barajarPila(){
+        barajaController.barajar_Rapido();
+        barajaController.barajar_Pila();
+        activarBarajar(false);
+    }
+
+    public void comenzarJuego(){
+        panel.SetActive(false);
+        inicializarTablero();
+        botonJugar.SetActive(false);
+        repartirCartas();
+    }
+
+    private void activarBarajar(bool activar){
+        botonBarajarP.SetActive(activar);
+        botonBarajarR.SetActive(activar);
     }
 }
