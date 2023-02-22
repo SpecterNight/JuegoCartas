@@ -8,7 +8,6 @@ public class CartaController : MonoBehaviour{
     public Vector3 posicionFinal;
     public Vector3 posicionIntermedia = new Vector3(-8.0f,0.0f,0.0f);
     public Vector3 posicionInicial;
-    public bool estaOrdenada = false;
     public bool moverIntermedio = false;
     public bool moverInicial = false;
     public bool moverFinal = false;

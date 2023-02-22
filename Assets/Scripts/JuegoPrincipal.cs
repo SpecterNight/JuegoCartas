@@ -11,7 +11,7 @@ public class JuegoPrincipal : MonoBehaviour{
 
     private Vector3[] posiciones = new Vector3[13];
     
-    private GameObject cartaSeleccionada;
+    private Carta cartaSeleccionada;
     // Start is called before the first frame update
     void Start(){
         inicializarJuego();
@@ -60,7 +60,7 @@ public class JuegoPrincipal : MonoBehaviour{
             yOffset = 0.0f;
             zOffset = 0.0f;
             for (int j = 0; j < 4; j++){
-                posicionInicial = new Vector3(posiciones[i].x,posiciones[i].y-yOffset,posiciones[i].z-zOffset);
+                posicionInicial = new Vector3(posiciones[i].x,posiciones[i].y+yOffset,posiciones[i].z+zOffset);
                 prefabController.mostrarPrefab((i+1),tablero[i,j].Numero,tablero[i,j].Palo);
                 GameObject target = GameObject.Find(tablero[i,j].Palo+tablero[i,j].Numero+("(Clone)"));
                 target.GetComponent<CartaController>().carta = tablero[i,j];
@@ -71,13 +71,26 @@ public class JuegoPrincipal : MonoBehaviour{
                 zOffset += 0.03f;
             }
         }
-        cartaSeleccionada = GameObject.Find(tablero[12,3].Palo+tablero[12,3].Numero+("(Clone)"));
+        cartaSeleccionada = tablero[12,0];
     }
 
     public void ordenarCarta(){
-        cartaSeleccionada.GetComponent<CartaController>().posicionFinal = posiciones[cartaSeleccionada.GetComponent<CartaController>().carta.Numero-1];
-        cartaSeleccionada.GetComponent<CartaController>().velocidadMovimiento = 10;
-        cartaSeleccionada.GetComponent<CartaController>().moverIntermedio = true;
-        cartaSeleccionada.GetComponent<CartaController>().mover = true;
+        if(!cartaSeleccionada.EstaOrdenada){
+            Carta cartaAux = tablero[cartaSeleccionada.Numero-1,0];
+            if(!cartaAux.EstaOrdenada){
+                for (int i = 0; i < 3; i++){
+                    tablero[cartaSeleccionada.Numero-1, i] = tablero[cartaSeleccionada.Numero-1, i+1];
+                }
+                tablero[cartaSeleccionada.Numero-1, 3] = cartaAux;
+                GameObject objetoCarta = GameObject.Find(cartaSeleccionada.Palo+cartaSeleccionada.Numero+("(Clone)"));
+                objetoCarta.GetComponent<CartaController>().posicionFinal = posiciones[cartaSeleccionada.Numero-1];
+                objetoCarta.GetComponent<CartaController>().moverIntermedio = true;
+                objetoCarta.GetComponent<CartaController>().mover = true;
+                cartaSeleccionada.EstaOrdenada = true;
+                cartaSeleccionada = cartaAux;
+            }
+        }else{
+            Debug.Log("Perdedor");
+        }
     }
 }
