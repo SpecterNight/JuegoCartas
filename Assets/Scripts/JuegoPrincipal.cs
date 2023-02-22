@@ -84,21 +84,16 @@ public class JuegoPrincipal : MonoBehaviour{
         botonBarajar.SetActive(false);
         if(!cartaSeleccionada.EstaOrdenada){
             Carta cartaAux = tablero[cartaSeleccionada.Numero-1,0];
-            if(!cartaAux.EstaOrdenada){
-                for (int i = 0; i < 3; i++){
-                    tablero[(cartaSeleccionada.Numero)-1, i] = tablero[(cartaSeleccionada.Numero)-1, (i+1)];
-                }
-                GameObject objetoCarta = GameObject.Find(cartaSeleccionada.Palo+cartaSeleccionada.Numero+("(Clone)"));
-                objetoCarta.GetComponent<CartaController>().posicionFinal = posiciones[cartaSeleccionada.Numero-1];
-                objetoCarta.GetComponent<CartaController>().moverIntermedio = true;
-                objetoCarta.GetComponent<CartaController>().mover = true;
-                cartaSeleccionada.EstaOrdenada = true;
-                tablero[cartaSeleccionada.Numero-1, 3] = cartaSeleccionada;
-                cartaSeleccionada = cartaAux;
-            }else{
-                botonBarajar.SetActive(true);
-                Debug.Log("Perdedor");
+            for (int i = 0; i < 3; i++){
+                tablero[(cartaSeleccionada.Numero)-1, i] = tablero[(cartaSeleccionada.Numero)-1, (i+1)];
             }
+            GameObject objetoCarta = GameObject.Find(cartaSeleccionada.Palo+cartaSeleccionada.Numero+("(Clone)"));
+            objetoCarta.GetComponent<CartaController>().posicionFinal = posiciones[cartaSeleccionada.Numero-1];
+            objetoCarta.GetComponent<CartaController>().moverIntermedio = true;
+            objetoCarta.GetComponent<CartaController>().mover = true;
+            cartaSeleccionada.EstaOrdenada = true;
+            tablero[cartaSeleccionada.Numero-1, 3] = cartaSeleccionada;
+            cartaSeleccionada = cartaAux;
         }else{
             botonBarajar.SetActive(true);
             Debug.Log("Perdedor");
