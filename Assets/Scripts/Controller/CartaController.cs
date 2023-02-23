@@ -50,7 +50,7 @@ public class CartaController : MonoBehaviour{
     }
     
     public void moverCarta(Vector3 posicionDestino){
-        transform.position = Vector3.SmoothDamp(transform.position, posicionDestino,ref velocity,0.1f,velocidadMovimiento);
+        transform.position = Vector3.SmoothDamp(transform.position, posicionDestino,ref velocity,0.3f,velocidadMovimiento);
         mover = !(transform.position == posicionFinal);
     }
 

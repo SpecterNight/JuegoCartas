@@ -152,7 +152,7 @@ public class JuegoPrincipal : MonoBehaviour{
     private void activarFin(bool esGanador){
         if(esGanador){
             mensajePartida.text = "Ganador";
-            mensajePartida.color = Color.green;
+            mensajePartida.color = Color.yellow;
         }else{
             mensajePartida.text = "Perdedor";
             mensajePartida.color = Color.red;
