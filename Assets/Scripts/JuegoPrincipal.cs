@@ -102,7 +102,10 @@ public class JuegoPrincipal : MonoBehaviour{
                 tablero[(cartaSeleccionada.Numero)-1, i] = tablero[(cartaSeleccionada.Numero)-1, (i+1)];
             }
             GameObject objetoCarta = GameObject.Find(cartaSeleccionada.Palo+cartaSeleccionada.Numero+("(Clone)"));
-            objetoCarta.GetComponent<CartaController>().posicionFinal = posiciones[cartaSeleccionada.Numero-1];
+            Vector3 posFinal = posiciones[cartaSeleccionada.Numero-1];
+            posFinal.z = posFinal.z +(0.03f*4);
+            posFinal.y = posFinal.y +(0.01f*4);
+            objetoCarta.GetComponent<CartaController>().posicionFinal = posFinal;
             objetoCarta.GetComponent<CartaController>().moverIntermedio = true;
             objetoCarta.GetComponent<CartaController>().mover = true;
             cartaSeleccionada.EstaOrdenada = true;
