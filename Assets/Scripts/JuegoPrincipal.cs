@@ -20,11 +20,16 @@ public class JuegoPrincipal : MonoBehaviour{
     public GameObject panel; 
     public GameObject mensajeFin;
     public TMP_Text mensajePartida;
+
+    public GameObject animacion;
     // Start is called before the first frame update
     void Start(){
         inicializarJuego();
         panel.SetActive(true);
         obtenerPosiciones();
+        animacion = GameObject.Find("animBarajar");
+        animacion.SetActive(false);
+        animacion.GetComponent<Transform>().position = new Vector3(0,0,0);
     }
 
     // Update is called once per frame
@@ -125,24 +130,27 @@ public class JuegoPrincipal : MonoBehaviour{
     }
 
     public void barajarRapido(){
+        panel.SetActive(false);
         barajaController.barajar_Rapido();
         activarBarajar(false);
         botonJugar.SetActive(true);
-
+        animacion.SetActive(true);
     }
 
     public void barajarPila(){
+        panel.SetActive(false);
         barajaController.barajar_Pila();
         activarBarajar(false);
         botonJugar.SetActive(true);
+        animacion.SetActive(true);
     }
 
     public void comenzarJuego(){
-        panel.SetActive(false);
         inicializarTablero();
         botonJugar.SetActive(false);
         repartirCartas();
         botonOrdenar.SetActive(true);
+        animacion.SetActive(false);
     }
 
     private void activarBarajar(bool activar){

@@ -12,7 +12,7 @@ public class CartaController : MonoBehaviour{
     public bool moverIntermedio = false;
     public bool moverInicial = false;
     public bool moverFinal = false;
-    public float velocidadMovimiento = 3;
+    public float velocidadMovimiento = 5;
     public Carta carta;
     public GameObject boton;
     public Sprite caraCarta;
@@ -50,7 +50,7 @@ public class CartaController : MonoBehaviour{
     }
     
     public void moverCarta(Vector3 posicionDestino){
-        transform.position = Vector3.SmoothDamp(transform.position, posicionDestino,ref velocity,0.3f,velocidadMovimiento);
+        transform.position = Vector3.SmoothDamp(transform.position, posicionDestino,ref velocity,0.1f,velocidadMovimiento-1);
         mover = !(transform.position == posicionFinal);
     }
 
