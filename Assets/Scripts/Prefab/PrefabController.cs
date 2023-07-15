@@ -3,7 +3,10 @@ using UnityEngine;
 public class PrefabController{
     private Vector3 posicionInicial = new Vector3(0,-10,0);
     private GameObject cartaPrefab = Resources.Load<GameObject>("cartaPrefab");
-    public Sprite[] cartasSprite;
+    private Sprite[] cartasSprite;
+
+    public Sprite[] CartasSprite {set{cartasSprite = value;}}
+    
     public void mostrarPrefab(int deck, int numeroCarta, string palo){
         GameObject prefab = cartaPrefab;
         GameObject ubicacion = GameObject.Find("Deck"+deck);

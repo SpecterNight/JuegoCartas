@@ -7,21 +7,21 @@ public class JuegoPrincipal : MonoBehaviour{
     private BarajaController barajaController;
     private PrefabController prefabController;
 
-    public Sprite[] spriteCartas;
+    [SerializeField] private Sprite[] spriteCartas;
     private Carta[,] tablero = new Carta[13,4];
 
     private Vector3[] posiciones = new Vector3[13];
     
     private Carta cartaSeleccionada;
-    public GameObject botonOrdenar;
-    public GameObject botonBarajarR;
-    public GameObject botonBarajarP;
-    public GameObject botonJugar;
-    public GameObject panel; 
-    public GameObject mensajeFin;
-    public TMP_Text mensajePartida;
+    [SerializeField] private GameObject botonOrdenar;
+    [SerializeField] private GameObject botonBarajarR;
+    [SerializeField] private GameObject botonBarajarP;
+    [SerializeField] private GameObject botonJugar;
+    [SerializeField] private GameObject panel; 
+    [SerializeField] private GameObject mensajeFin;
+    [SerializeField] private TMP_Text mensajePartida;
 
-    public GameObject animacion;
+    private GameObject animacion;
     // Start is called before the first frame update
     void Start(){
         inicializarJuego();
@@ -41,20 +41,18 @@ public class JuegoPrincipal : MonoBehaviour{
         barajaController = new BarajaController();
         prefabController = new PrefabController();
         prefabController.destruirClones();
-        prefabController.cartasSprite = spriteCartas;
+        prefabController.CartasSprite = spriteCartas;
         mensajeFin.SetActive(false);
         panel.SetActive(false);
         activarBarajar(true);
         botonJugar.SetActive(false);
         botonOrdenar.SetActive(false);
         barajaController.inicializarBaraja();
-        //inicializarTablero();
     }
 
     public void inicializarTablero(){
         int aux = 0;
         Carta[] cartas = barajaController.cartas;
-        //barajaController.imprimir(cartas);
         for (int i = 0; i < 13; i++){
             for (int j = 0; j < 4; j++){
                 tablero[i,j] = cartas[aux+j];
@@ -82,12 +80,8 @@ public class JuegoPrincipal : MonoBehaviour{
                 posicionInicial = new Vector3(posiciones[i].x,posiciones[i].y+yOffset,posiciones[i].z+zOffset);
                 prefabController.mostrarPrefab((i+1),tablero[i,j].Numero,tablero[i,j].Palo);
                 GameObject target = GameObject.Find(tablero[i,j].Palo+tablero[i,j].Numero+("(Clone)"));
-                target.GetComponent<CartaController>().boton = botonOrdenar;
-                target.GetComponent<CartaController>().caraCarta = spriteCartas[System.Array.FindIndex(spriteCartas, s => s.name.Equals(tablero[i,j].Palo+"_"+tablero[i,j].Numero))];
-                target.GetComponent<CartaController>().carta = tablero[i,j];
-                target.GetComponent<CartaController>().posicionInicial = posicionInicial;
-                target.GetComponent<CartaController>().moverInicial = true;
-                target.GetComponent<CartaController>().mover = true;
+                Sprite caraCarta = spriteCartas[System.Array.FindIndex(spriteCartas, s => s.name.Equals(tablero[i,j].Palo+"_"+tablero[i,j].Numero))];
+                target.GetComponent<CartaMovimiento>().inicializar(botonOrdenar, caraCarta, tablero[i,j],posicionInicial);
                 yOffset += 0.1f;
                 zOffset += 0.03f;
             }
@@ -110,9 +104,9 @@ public class JuegoPrincipal : MonoBehaviour{
             Vector3 posFinal = posiciones[cartaSeleccionada.Numero-1];
             posFinal.z = posFinal.z +(0.03f*4);
             posFinal.y = posFinal.y +(0.01f*4);
-            objetoCarta.GetComponent<CartaController>().posicionFinal = posFinal;
-            objetoCarta.GetComponent<CartaController>().moverIntermedio = true;
-            objetoCarta.GetComponent<CartaController>().mover = true;
+            objetoCarta.GetComponent<CartaMovimiento>().PosicionFinal = posFinal;
+            objetoCarta.GetComponent<CartaMovimiento>().MoverIntermedio = true;
+            objetoCarta.GetComponent<CartaMovimiento>().Mover = true;
             cartaSeleccionada.EstaOrdenada = true;
             tablero[cartaSeleccionada.Numero-1, 3] = cartaSeleccionada;
             cartaSeleccionada = cartaAux;
@@ -159,10 +153,10 @@ public class JuegoPrincipal : MonoBehaviour{
     }
     private void activarFin(bool esGanador){
         if(esGanador){
-            mensajePartida.text = "Ganador";
+            mensajePartida.text = "Victoria";
             mensajePartida.color = Color.yellow;
         }else{
-            mensajePartida.text = "Perdedor";
+            mensajePartida.text = "Inténtalo de nuevo";
             mensajePartida.color = Color.red;
         }
         mensajeFin.SetActive(true);

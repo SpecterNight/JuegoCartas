@@ -31,7 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2027691547048683125
 SpriteRenderer:
@@ -94,16 +94,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 5024257749542098300}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb1b8350309164e41a9f715028e0c3d9, type: 3}
+  m_Script: {fileID: 11500000, guid: 7c2374f94d2f04e49a02e326711b68b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mover: 0
-  posicionFinal: {x: 0, y: 0, z: 0}
-  posicionIntermedia: {x: 0, y: 0, z: 0}
-  posicionInicial: {x: 0, y: 0, z: 0}
-  moverIntermedio: 0
-  moverInicial: 0
-  moverFinal: 0
-  velocidadMovimiento: 10
-  boton: {fileID: 0}
-  caraCarta: {fileID: 0}

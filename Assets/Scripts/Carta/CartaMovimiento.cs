@@ -3,20 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class CartaController : MonoBehaviour{
-    public bool mover = false;
-    Vector3 velocity;
-    public Vector3 posicionFinal;
-    public Vector3 posicionIntermedia = new Vector3(-8.0f,0.0f,0.0f);
-    public Vector3 posicionInicial;
-    public bool moverIntermedio = false;
-    public bool moverInicial = false;
-    public bool moverFinal = false;
-    public float velocidadMovimiento = 5;
-    public Carta carta;
-    public GameObject boton;
-    public Sprite caraCarta;
+public class CartaMovimiento : MonoBehaviour{
+    private bool mover = false;
+    private Vector3 velocity;
+    private Vector3 posicionFinal;
+    private Vector3 posicionIntermedia = new Vector3(-8.0f,0.0f,0.0f);
+    private Vector3 posicionInicial;
+    private bool moverIntermedio = false;
+    private bool moverInicial = false;
+    private bool moverFinal = false;
+    private float velocidadMovimiento = 5;
+    private Carta carta;
+    private GameObject boton;
+    private Sprite caraCarta;
     // Start is called before the first frame update
+    public Vector3 PosicionFinal{set{posicionFinal = value;}}
+    public bool MoverIntermedio{set{moverIntermedio = value;}}
+    public bool Mover{set{mover = value;}}
     void Start(){
          posicionIntermedia = new Vector3(-8.0f,0.0f,0.0f);
     }
@@ -49,13 +52,21 @@ public class CartaController : MonoBehaviour{
         }
     }
     
+    public void inicializar(GameObject boton, Sprite caraCarta, Carta carta, Vector3 posI){
+        this.boton = boton;
+        this.caraCarta = caraCarta;
+        this.carta = carta;
+        this.posicionInicial = posI;
+        this.moverInicial = true;
+        this.mover = true;
+    }
+
     public void moverCarta(Vector3 posicionDestino){
         transform.position = Vector3.SmoothDamp(transform.position, posicionDestino,ref velocity,0.1f,velocidadMovimiento-1);
         mover = !(transform.position == posicionFinal);
     }
 
     private void mostrarCara(){
-       // GetComponent<SpriteRenderer>().sprite = cartasSprite[System.Array.FindIndex(cartasSprite, s => s.name.Equals(palo+"_"+numeroCarta))];
         GetComponent<SpriteRenderer>().sprite = caraCarta;
     }
 }
